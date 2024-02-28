@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get("/api/v1/test", (req, res) => {
-  res.json({ data: "hello World!" });
+  res.json({ data: "You are awesome!!!" });
 });
 
 const PORT = process.env.PORT || 1997;

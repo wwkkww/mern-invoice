@@ -27,3 +27,9 @@ user:
 
 volume:
 	docker volume inspect mern-invoice_mongodb-data
+
+pg-backup:
+	docker compose -f docker-compose.yml exec postgres backup
+
+pg-ls-backup:
+	docker compose -f docker-compose.yml exec postgres backups

@@ -16,6 +16,7 @@ if [[ -z ${1+x} ]]; then
   exit 1
 fi
 
+# set default folder filename. eg: /backups/backup_2024_02_29T13_07_00.sql.gz
 backup_filename="${BACKUP_DIR_PATH}/${1}"
 
 if [[ ! -f "${backup_filename}"  ]]; then

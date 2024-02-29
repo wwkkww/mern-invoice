@@ -1,3 +1,6 @@
+check:
+	docker compose -f docker-compose.yml config 
+	
 build: 
 	docker compose -f docker-compose.yml up --build -d --remove-orphans
 
@@ -23,4 +26,4 @@ user:
 	docker run --rm mern-invoice-api whoami
 
 volume:
-	docker volume inspect mern-invoice_mongodb-data 
+	docker volume inspect mern-invoice_mongodb-data

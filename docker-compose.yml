@@ -69,6 +69,21 @@ services:
     networks:
       - inv-network
 
+  pgadmin:
+    image: dpage/pgadmin4:8.3
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
+    ports:
+      - "8001:8001"
+    volumes: 
+      - ./data/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - inv-network
+
   mailhog:
     image: mailhog/mailhog:v1.0.0
     ports:

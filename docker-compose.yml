@@ -11,12 +11,23 @@ services:
       - .:/app # map current local directory to ./app dir in container. prevent rebuild image on every changes during dev
     depends_on:
       - mongodb
-    ports:
-      - "1997:1997"
+    # ports:
+    #   - "1997:1997"
     environment:
       NODE_ENV: ${NODE_ENV}
       MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
       FORCE_COLOR: 1 # to enable chalk working in container
+    networks:
+      - inv-network
+  
+  client:
+    build:
+      context: ./client
+      dockerfile: ./docker/local/Dockerfile
+    restart: on-failure
+    volumes:
+      - ./client:/app
+      - /app/node_modules   # do not overwrite app/node_modules in container
     networks:
       - inv-network
 
@@ -92,6 +103,21 @@ services:
     networks:
       - inv-network
 
+  nginx:
+    build:
+      context: ./docker/local/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80" # server set "listen 80;" in nginx conf file
+    restart: always
+    depends_on:
+      - api
+    volumes:
+      - static_volume:/app/staticfiles
+      - pdf_volume:/app/docs
+    networks:
+      - inv-network
+
 networks:
   inv-network:
     driver: bridge
@@ -100,4 +126,5 @@ volumes:
   mongodb-data:
   local_postgres_data:
   local_postgres_data_backups:
-
+  static_volume:
+  pdf_volume:
